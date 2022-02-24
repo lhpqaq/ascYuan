@@ -137,7 +137,7 @@ def get_args():
 
 def main():
     logging.basicConfig(level=logging.INFO #设置日志输出格式
-                    ,filename="demo2.log" #log日志输出的文件位置和文件名
+                    ,filename="224.log" #log日志输出的文件位置和文件名
                     ,format="%(asctime)s - %(name)s - %(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s" #日志输出的格式
                     # -8表示占位符，让输出左对齐，输出长度都为8位
                     ,datefmt="%Y-%m-%d %H:%M:%S" #时间输出的格式
@@ -235,7 +235,9 @@ def main():
 
     crossentropyloss = My_CEloss('sum')
     since = time.time()
-    print()
+    log = 'Start step: '+ str(start)+'\n'
+    print(log)
+    logging.info(log)
     for i,Input in loop:
         if(i<=start):
             continue
