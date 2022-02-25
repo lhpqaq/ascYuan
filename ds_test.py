@@ -192,7 +192,8 @@ def main():
     print('Checkpoint loading completed!')
     #data_loader = get_data_loader(path='data/test_index.txt',batch_size=args.batch_size)
     print('Training data loading...')
-    torch_data=TensorDataset('./data/iData0.npy',if_dir=False)
+    #torch_data=TensorDataset('./data/iData0.npy',if_dir=False)
+    torch_data=TensorDataset('./data/',if_dir=True)
     sampler = DistributedSampler(torch_data)
     data_loader = torch.utils.data.DataLoader(torch_data,
                                                pin_memory=True,
@@ -233,7 +234,6 @@ def main():
     #         model_engine.save_checkpoint('./checkpoint/',client_state=dic)
 
 
-    crossentropyloss = My_CEloss('sum')
     since = time.time()
     log = 'Start step: '+ str(start)+'\n'
     print(log)
@@ -251,7 +251,7 @@ def main():
         #Input = Input.view(-1).long()
         #print('Input:',Input.shape)
         #print('out:',out.shape)
-        loss=crossentropyloss(out,Input)
+        loss=myloss(out,Input)
         log = 'rank'+str(rank)+'\tloss:' + str(loss.item()) + '\t\ttokens_num:' + str((i+1)*args.batch_size*2048/100000) + 'HT'
         logging.info(log)
         loop.set_postfix(loss=loss.item())
